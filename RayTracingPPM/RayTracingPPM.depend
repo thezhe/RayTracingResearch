@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1553467333 source:/media/sf_..Geometry/RayTracingPPM/main.cpp
+	<fstream>
+	"hitablelist.h"
+	"sphere.h"
+	"float.h"
+
+1553467602 /media/sf_..Geometry/RayTracingPPM/vec3.h
+	<math.h>
+	<iostream>
+
+1553466459 /media/sf_..Geometry/RayTracingPPM/ray.h
+	"vec3.h"
+
+1553467099 /media/sf_..Geometry/RayTracingPPM/hitablelist.h
+	"hitable.h"
+
+1553467142 /media/sf_..Geometry/RayTracingPPM/hitable.h
+	"ray.h"
+
+1553467578 /media/sf_..Geometry/RayTracingPPM/sphere.h
+	"hitable.h"
+
