@@ -21,3 +21,29 @@
 1553467578 /media/sf_..Geometry/RayTracingPPM/sphere.h
 	"hitable.h"
 
+1553471348 source:/media/sf_RayTracingResearch/RayTracingPPM/main.cpp
+	<fstream>
+	"hitablelist.h"
+	"sphere.h"
+	"camera.h"
+	"float.h"
+
+1553467827 /media/sf_RayTracingResearch/RayTracingPPM/hitablelist.h
+	"hitable.h"
+
+1553467142 /media/sf_RayTracingResearch/RayTracingPPM/hitable.h
+	"ray.h"
+
+1553466459 /media/sf_RayTracingResearch/RayTracingPPM/ray.h
+	"vec3.h"
+
+1553467602 /media/sf_RayTracingResearch/RayTracingPPM/vec3.h
+	<math.h>
+	<iostream>
+
+1553471665 /media/sf_RayTracingResearch/RayTracingPPM/sphere.h
+	"hitable.h"
+
+1553470615 /media/sf_RayTracingResearch/RayTracingPPM/camera.h
+	"ray.h"
+

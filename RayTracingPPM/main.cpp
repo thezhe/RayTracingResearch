@@ -2,6 +2,7 @@
 #include <fstream>
 #include "hitablelist.h"
 #include "sphere.h"
+#include "camera.h"
 #include "float.h"
 
 using namespace std;
@@ -25,25 +26,28 @@ int main()
 {
     ofstream file;
     file.open("RayTracing.ppm");
-    int x = 200;
-    int y = 100;
+    int x = 2000;
+    int y = 1000;
+    int samples = 4;
     file << "P3\n" << x << " " << y << "\n255\n";
-    vec3 lower_left(-2, -1, -1);
-    vec3 horizontal(4,0,0);
-    vec3 vertical(0,2,0);
-    vec3 origin(0,0,0);
     hitable *hlist[2];
     hlist[0] = new sphere(vec3(0,0,-1), 0.5);
     hlist[1] = new sphere(vec3(0,-100.5,-1),100);
     hitable *world = new hitablelist(hlist, 2);
+    camera cam;
     for (int j=y-1; j>-1; j--)  //from top row to bottom
     {
         for (int i = 0; i<x; i++)  //from left to right
         {
-            float u =float(i)/float(x);
-            float v = float(j)/float(y);
-            ray ray (origin, lower_left + u*horizontal + v*vertical); //ray pos
-            vec3 color = shader(ray, world); //associated color
+            vec3 color(0,0,0);
+            for (int s=0; s<samples; s++)
+            {
+                float u =float(i+drand48())/float(x);
+                float v = float(j+drand48())/float(y);
+                ray ray =  cam.get_ray(u,v);
+                color = color + shader(ray, world); //associated color
+            }
+            color = color/float(samples);
             color = 255.99*color;
             int r = int(color.x);
             int g = int(color.y);
@@ -55,3 +59,4 @@ int main()
     cout << "Done" << endl;
     return 0;
 }
+//TODO super sampling for edges only

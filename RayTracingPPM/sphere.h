@@ -20,7 +20,7 @@ public:
     bool hit (const ray& ray, float t_min, float t_max, record& rec) const override;
 };
 
-bool sphere::hit(const ray& ray, float t_min, float t_max, record& rec) const
+bool sphere::hit(const ray& ray, float t_min, float t_max, record& rec/*,bool SS*/) const
 {
     vec3 co = ray.A - center;
     float a = dot(ray.B,ray.B);
@@ -29,6 +29,9 @@ bool sphere::hit(const ray& ray, float t_min, float t_max, record& rec) const
     float d = b*b-4*a*c;
     if (d>0)
     {
+        /*if (d<0.1){
+        SS=true;
+        }*/
         float t = (-b -sqrt(d))/(2*a);
         if(t<t_max && t>t_min)
         {
