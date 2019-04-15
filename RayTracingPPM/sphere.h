@@ -23,12 +23,14 @@ public:
 bool sphere::hit(const ray& ray, float t_min, float t_max, record& rec/*,bool SS*/) const
 {
     vec3 co = ray.A - center;
+    //sphere hit with respect to a parameter t on a ray
     float a = dot(ray.B,ray.B);
     float b = 2.0 * dot(co,ray.B);
     float c = dot(co,co) - radius*radius;
     float d = b*b-4*a*c;
     if (d>0)
     {
+        //check both roots
         /*if (d<0.1){
         SS=true;
         }*/

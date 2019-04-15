@@ -9,7 +9,7 @@ class ray
 public:
 //vars for ray AB
     vec3 A;//origin
-    vec3 B;
+    vec3 B;//direction
 //constructors
     ray() {}
     ray (const vec3& a, const vec3& b)

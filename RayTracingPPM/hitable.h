@@ -13,7 +13,7 @@ struct record
 class hitable
 {
 public:
-    virtual bool hit (const ray& r, float t_min, float t_max, record& rec) const = 0;
+    virtual bool hit (const ray& r, float t_min, float t_max, record& rec) const = 0; //declared in hitablelist
 };
 
 #endif

@@ -12,21 +12,22 @@ vec3() {}
 vec3(float X, float Y, float Z) {x = X; y = Y; z = Z;}
 //methods
 float length() const {return sqrt(x*x+y*y+z*z);}
+float length2() const {return x*x+y*y+z*z;}
 };
-//scaling by constant
+//multiplying with constant
 vec3 operator*(float t, const vec3 &v){
     return vec3(t*v.x,t*v.y,t*v.z);
 }
 vec3 operator*(const vec3 &v, float t){
     return vec3(t*v.x,t*v.y,t*v.z);
-}//dividing by constant
+}//dividing with constant
 vec3 operator/(float t, const vec3 &v){
     return vec3(t/v.x,t/v.y,t/v.z);
 }
 vec3 operator/(const vec3 &v, float t){
     return vec3(v.x/t,v.y/t,v.z/t);
 }
-//adding by constant
+//adding with constant
 vec3 operator+(float t, const vec3 &v){
     return vec3(t+v.x,t+v.y,t+v.z);
 }
@@ -47,5 +48,5 @@ float dot(const vec3 &v1, const vec3 &v2){
 }
 //unit vector function
 vec3 unit_vector (vec3 v){
-return v*(1/v.length());
+return (v/v.length());
 }

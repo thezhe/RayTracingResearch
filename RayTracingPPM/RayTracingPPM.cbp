@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="camera.h" />
 		<Unit filename="hitable.h" />
 		<Unit filename="hitablelist.h" />
 		<Unit filename="main.cpp" />
@@ -41,6 +42,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

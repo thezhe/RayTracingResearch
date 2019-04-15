@@ -6,7 +6,7 @@
 class hitablelist: public hitable{
     public:
         //vars
-        hitable **hlist; //*array[# spheres]
+        hitable **hlist; //*array[# spheres/shapes]
         int lsize;
         //constructors
         hitablelist (){}
@@ -20,6 +20,7 @@ bool hitablelist::hit(const ray& ray, float t_min, float t_max, record& rec) con
     bool hit_anything = false;
     double closest_p = t_max;
     for (int i = 0; i<lsize; i++){
+        //hlist[i] -> hit references the declaration from "sphere.h"
         if(hlist[i]->hit (ray, t_min, closest_p, temp_rec)){
             hit_anything = true;
             closest_p=temp_rec.t;
