@@ -3,18 +3,22 @@
 
 #include "hitable.h"
 
+class material; //forward declaration
+
 class sphere: public hitable
 {
 public:
     //vars
     vec3 center;
     float radius;
+    material* mat;
     //constructors
     sphere() {}
-    sphere (vec3 c, float r)
+    sphere (vec3 c, float r, material* m)
     {
         center = c;
         radius = r;
+        mat = m;
     }
     //inherited method
     bool hit (const ray& ray, float t_min, float t_max, record& rec) const override;
@@ -40,6 +44,7 @@ bool sphere::hit(const ray& ray, float t_min, float t_max, record& rec/*,bool SS
             rec.t = t;
             rec.p = ray.at_t(rec.t);
             rec.N= (rec.p - center)/radius;
+            rec.m = mat;
             return true;
         }
         t = (-b +sqrt(d))/(2*a);
@@ -48,6 +53,7 @@ bool sphere::hit(const ray& ray, float t_min, float t_max, record& rec/*,bool SS
             rec.t = t;
             rec.p = ray.at_t(rec.t);
             rec.N= (rec.p - center)/radius;
+            rec.m = mat;
             return true;
         }
     }

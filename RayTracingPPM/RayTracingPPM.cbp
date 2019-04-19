@@ -36,6 +36,7 @@
 		<Unit filename="hitable.h" />
 		<Unit filename="hitablelist.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="material.h" />
 		<Unit filename="ray.h" />
 		<Unit filename="sphere.h" />
 		<Unit filename="vec3.h" />

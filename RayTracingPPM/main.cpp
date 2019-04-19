@@ -1,39 +1,28 @@
 //Zhe Deng U16716991
 #include <fstream>
 #include <time.h>
-#include "hitablelist.h"
-#include "sphere.h"
-#include "camera.h"
 #include "float.h"
+#include "camera.h"
+#include "sphere.h"
+#include "hitablelist.h"
+#include "material.h"
 
 using namespace std;
 
-//random float between 0 and 1
-float Frand()
-{
-    return ((float) rand())/(float)RAND_MAX;
-}
-//used for Matte objects
-vec3 random_in_unit_sphere()
-{
-    vec3 p;
-    do
-    {
-        p=2.0*vec3(Frand(),Frand(),Frand())-vec3(1,1,1);
-    }
-    while(p.length2()>=1.0);
-    return p;
-}
-
 //determines pixel color
-vec3 shader(const ray& r, hitable *world)
+vec3 shader(const ray& r, hitable *world, int depth)
 {
     record rec;
     if (world->hit(r, 0.001, FLT_MAX,rec)) //t_min>0 to solve float errors
     {
-        vec3 target=rec.p + rec.N + random_in_unit_sphere();
-        return 0.5*shader(ray(rec.p, target-rec.p), world); //avg b/w normal and white
-        //return 0.5*(rec.N+1);
+        ray scattered;
+        vec3 attenuation;
+        if (depth < 50 && rec.m->scatter(r,rec,attenuation,scattered)){
+            return attenuation*shader(scattered, world, depth+1);
+        }
+        else {
+            return vec3(0,0,0);
+        }
     }
     else  //background
     {
@@ -50,12 +39,14 @@ int main()
     file.open("RayTracing.ppm");
     int x = 2000;
     int y = 1000;
-    int samples = 16; //16 times super sampling
+    int samples = 16; //16 times for testing, >200 for convergence
     file << "P3\n" << x << " " << y << "\n255\n";
-    hitable *hlist[2];
-    hlist[0] = new sphere(vec3(0,0,-1), 0.5);
-    hlist[1] = new sphere(vec3(0,-100.5,-1),100);
-    hitable *world = new hitablelist(hlist, 2);
+    hitable *hlist[4];
+    hlist[0] = new sphere(vec3(0,-0.25,-1), 0.25, new lambertian(vec3(0.3, 0.0, 0.1)));
+    hlist[1] = new sphere(vec3(0,-100.5,-1),100, new lambertian (vec3(0.3, 0.3, 0.5)));
+    hlist[2] = new sphere(vec3(0.5,-0.25,-1),0.25, new metal (vec3(0.2, 0.7, 0.2),0.25));
+    hlist[3] = new sphere(vec3(-0.5,-0.25,-1),0.25, new dielectric(1.5));
+    hitable *world = new hitablelist(hlist, 4);
     camera cam;
     for (int j=y-1; j>-1; j--)  //from top row to bottom
     {
@@ -68,10 +59,10 @@ int main()
                 float u = float(i + Frand())/float(x);
                 float v = float(j + Frand())/float(y);
                 ray Sample = cam.get_ray(u,v);
-                color = color + shader(Sample, world); //associated color
+                color = color + shader(Sample, world, 0); //associated color
             }
             color = color/float(samples);
-            color = vec3(sqrt(color.x),sqrt(color.y),sqrt(color.z)); //gamma correction
+            color = vec3(sqrt(color.x),sqrt(color.y),sqrt(color.z)); //gamma correction (power = 1/gamma)
             color = 255.99*color;
             int r = int(color.x);
             int g = int(color.y);
@@ -83,4 +74,6 @@ int main()
     cout << "Done" << endl;
     return 0;
 }
-//TODO super sampling for edges only
+//TODO state downside SS needed for convergence to gorund truth
+//TODO random in sphere optimize downward weighted Frand vec3
+//TODO more material types?
