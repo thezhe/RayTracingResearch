@@ -1,5 +1,5 @@
 # RayTracingResearch
-My research project on ray tracing and shading techniques. 
+My research project on ray tracing and shading techniques as well as future independent research/learning. 
 
 Future stuff:
 Implementing/optimizing raytracing in c++ and using Unity's shaders to create a real-time application. Hope to create a shader that mixes ray tracing with traditional rasterization/baking.
